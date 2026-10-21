@@ -4,53 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friesenfiets | Klassische Stahlrennräder & Retro-MTBs</title>
-    
-    <!-- AUSFALLSICHERE STEUERUNG DER REITER -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const linkHome = document.getElementById('nav-home');
-            const linkRaeder = document.getElementById('nav-raeder');
-            const linkTeile = document.getElementById('nav-teile');
-            const logo = document.getElementById('nav-logo');
-
-            const secHome = document.getElementById('section-home');
-            const secRaeder = document.getElementById('section-raeder');
-            const secTeile = document.getElementById('section-teile');
-
-            function switchTab(targetId) {
-                // Alle Sektionen verstecken
-                secHome.style.display = 'none';
-                secRaeder.style.display = 'none';
-                secTeile.style.display = 'none';
-
-                // Alle Links visuell zurücksetzen
-                linkHome.classList.remove('active');
-                linkRaeder.classList.remove('active');
-                linkTeile.classList.remove('active');
-
-                // Ziel aktivieren
-                if (targetId === 'home') {
-                    secHome.style.display = 'block';
-                    linkHome.classList.add('active');
-                } else if (targetId === 'raeder') {
-                    secRaeder.style.display = 'block';
-                    linkRaeder.classList.add('active');
-                } else if (targetId === 'teile') {
-                    secTeile.style.display = 'block';
-                    linkTeile.classList.add('active');
-                }
-                
-                window.scrollTo({top: 0});
-            }
-
-            // Klick-Ereignisse sauber zuweisen
-            linkHome.addEventListener('click', function(e) { e.preventDefault(); switchTab('home'); });
-            linkRaeder.addEventListener('click', function(e) { e.preventDefault(); switchTab('raeder'); });
-            linkTeile.addEventListener('click', function(e) { e.preventDefault(); switchTab('teile'); });
-            logo.addEventListener('click', function(e) { e.preventDefault(); switchTab('home'); });
-        });
-    </script>
-
     <style>
         /* --- STYLING (DARK & PREMIUM) --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -62,6 +15,10 @@
             --text-main: #f5f5f7;
             --text-muted: #a1a1a6;
             --accent-chrome: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Sorgt für sanftes Scrollen zu den Bereichen */
         }
 
         body {
@@ -98,7 +55,6 @@
             text-transform: uppercase;
             color: var(--accent-chrome);
             text-decoration: none;
-            cursor: pointer;
         }
 
         nav a {
@@ -108,54 +64,105 @@
             margin-left: 1.5rem;
             transition: color 0.3s;
             font-weight: 500;
-            cursor: pointer;
         }
 
-        nav a:hover, nav a.active {
+        nav a:hover {
             color: var(--accent-chrome);
         }
 
         /* Hauptbereiche */
-        .page-section {
+        section {
             max-width: 1100px;
-            margin: 6rem auto;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 2rem 1.5rem;
+        }
+
+        /* Scroll-Offset wegen fixer Navigation */
+        .section-anchor {
+            scroll-margin-top: 5rem;
+        }
+
+        .hero { 
+            text-align: center; 
+            margin: 6rem auto 2rem auto; 
+            max-width: 800px; 
             padding: 0 1.5rem;
         }
+        
+        .hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+        
+        .hero p { 
+            font-size: 1.25rem; 
+            color: var(--text-muted); 
+        }
 
-        /* Eingebettete Shop-Bereiche */
-        .shop-section {
-            display: none;
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        /* Grid-Layouts */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; 
+        }
+        
+        .card { 
+            background-color: var(--bg-card); 
+            border: 1px solid var(--border-color); 
+            padding: 2.5rem; 
+            border-radius: 12px; 
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .card:hover {
+            border-color: #444;
+            transform: translateY(-4px);
+        }
+
+        h2 { 
+            font-size: 2rem; 
+            margin-bottom: 2rem; 
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 0.5rem; 
+            letter-spacing: -0.02em;
+        }
+
+        /* Marktplatz Boxen nebeneinander */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .shop-box {
+            background: linear-gradient(135deg, #141414 0%, #0d0d0d 100%);
+            border: 1px solid var(--border-color);
+            padding: 3.5rem 2.5rem;
             text-align: center;
-        }
-
-        /* Das Live-Fenster */
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 80vh;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
             border-radius: 12px;
-            overflow: hidden;
-            margin-top: 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
+        .shop-box:hover {
+            border-color: var(--accent-chrome);
+            transform: translateY(-2px);
         }
 
-        .fallback-notice {
-            padding: 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+        .shop-box h3 {
             margin-bottom: 1rem;
+            font-size: 1.6rem;
+            color: #ffffff;
+        }
+
+        .shop-box p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            min-height: 50px;
         }
 
         /* Buttons & Tags */
@@ -163,22 +170,13 @@
             display: inline-block;
             background-color: var(--accent-chrome);
             color: var(--bg-dark);
-            padding: 0.75rem 1.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
-            margin-top: 1rem;
             transition: opacity 0.3s;
         }
         .btn:hover { opacity: 0.9; }
-
-        .hero { text-align: center; margin: 6rem auto 4rem auto; max-width: 800px; }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; }
-        .hero p { font-size: 1.25rem; color: var(--text-muted); }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .card { background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 12px; }
-        h2 { font-size: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
 
         .kontakt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
         .kontakt-info h4 { color: var(--accent-chrome); margin-bottom: 0.5rem; }
@@ -191,7 +189,7 @@
             .hero h1 { font-size: 2.5rem; }
             .nav-container { flex-direction: column; gap: 1rem; text-align: center; }
             nav a { margin: 0 0.5rem; }
-            .iframe-container { height: 60vh; }
+            .shop-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -200,61 +198,94 @@
     <!-- NAVIGATION -->
     <header>
         <div class="nav-container">
-            <div id="nav-logo" class="logo">Friesenfiets</div>
+            <a href="#home" class="logo">Friesenfiets</a>
             <nav>
-                <a href="#" id="nav-home" class="active">Startseite</a>
-                <a href="#" id="nav-raeder">Aktuelle Räder</a>
-                <a href="#" id="nav-teile">Teile</a>
+                <a href="#philosophie">Philosophie</a>
+                <a href="#aktuelle-raeder">Aktuelle Räder</a>
+                <a href="#teile">Teile</a>
+                <a href="#kontakt">Kontakt</a>
             </nav>
         </div>
     </header>
 
-    <!-- REITER 1: STARTSEITE -->
-    <div id="section-home">
-        <main class="hero">
-            <h1>Echte Klassiker.<br>Wieder auf der Straße.</h1>
-            <p>Bei Friesenfiets retten wir die Ikonen der Fahrradgeschichte. Handwerk, Leidenschaft und Liebe zu klassischem Stahl.</p>
-        </main>
+    <!-- STARTSEITE HERO -->
+    <main class="hero" id="home">
+        <h1>Echte Klassiker.<br>Wieder auf der Straße.</h1>
+        <p>Bei Friesenfiets retten wir die Ikonen der Fahrradgeschichte. Handwerk, Leidenschaft und Liebe zu klassischem Stahl.</p>
+    </main>
 
-        <section class="page-section">
-            <h2>Das Handwerk</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Klassischer Stahl</h3>
-                    <p>Egal ob legendäre Columbus-Rohre, Reynolds oder Tange: Wir lieben das Fahrgefühl und die Ästhetik alter Stahlrennräder aus den 70ern, 80ern und 90ern.</p>
-                </div>
-                <div class="card">
-                    <h3>Retro Kult-MTBs</h3>
-                    <p>Die Geburtsstunde des Mountainbikes. Wir bringen die unzerstörbaren Klassiker der 26-Zoll-Ära mit zeitgenössischen oder modernen Komponenten zurück ins Gelände.</p>
-                </div>
-                <div class="card">
-                    <h3>Detailverliebtheit</h3>
-                    <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
-                </div>
+    <!-- PHILOSOPHIE -->
+    <section id="philosophie" class="section-anchor">
+        <h2>Das Handwerk</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Klassischer Stahl</h3>
+                <p>Egal ob legendäre Columbus-Rohre, Reynolds oder Tange: Wir lieben das Fahrgefühl und die Ästhetik alter Stahlrennräder aus den 70ern, 80ern und 90ern.</p>
             </div>
-        </section>
-
-        <section class="page-section">
-            <h2>Kontakt & Werkstatt</h2>
-            <div class="kontakt-grid">
-                <div class="kontakt-info">
-                    <h4>Werkstatt & Standort</h4>
-                    <p>friesenfiets<br>Oldenburger Str. 102<br>26316 Varel (Niedersachsen)</p>
-                </div>
-                <div class="kontakt-info">
-                    <h4>Telefon & Mobil</h4>
-                    <p>Festnetz: 04451 84491<br>Mobil: 0162 1774090</p>
-                </div>
-                <div class="kontakt-info">
-                    <h4>Online</h4>
-                    <p>E-Mail: info@friesenfiets.de<br>Kleinanzeigen: friesenfiets PRO</p>
-                </div>
+            <div class="card">
+                <h3>Retro Kult-MTBs</h3>
+                <p>Die Geburtsstunde des Mountainbikes. Wir bringen die unzerstörbaren Klassiker der 26-Zoll-Ära mit zeitgenössischen oder modernen Komponenten zurück ins Gelände.</p>
             </div>
-        </section>
-    </div>
+            <div class="card">
+                <h3>Detailverliebtheit</h3>
+                <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- REITER 2: AKTUELLE RÄDER (KLEINANZEIGEN PRO) -->
-    <div id="section-raeder" class="shop-section">
-        <h2>Aktuelle Räder (Kleinanzeigen PRO)</h2>
-        <div class="fallback-notice">
-            <p>Sollte die Live-Vorschau unten nicht korrekt laden, klicken Sie bitte direkt auf den Button:</p>
+    <!-- MARKTPLATZ BEREICH (Zwei-Spalten-Layout) -->
+    <section id="aktuelle-raeder" class="section-anchor">
+        <h2>Angebote & Verkaufsportale</h2>
+        <div class="shop-grid">
+            
+            <!-- Link 1: Kleinanzeigen Pro -->
+            <div class="shop-box">
+                <h3>Aktuelle Räder</h3>
+                <p>Besuchen Sie unsere offizielle Kleinanzeigen PRO Seite. Hier finden Sie unsere aktuell fahrbereiten Komplett-Räder, Rahmen-Sets und edlen Commuter-Umbauten.</p>
+                <a href="https://www.kleinanzeigen.de/pro/friesenfiets" class="btn" target="_blank">Kleinanzeigen PRO öffnen</a>
+            </div>
+
+            <!-- Link 2: eBay Shop -->
+            <div class="shop-box" id="teile">
+                <h3>Teile & Zubehör</h3>
+                <p>Durchstöbern Sie unseren eBay Store. Perfekt für seltene Vintage-Komponenten, originales Fahrradzubehör und restaurierte Ersatzteile für Ihr eigenes Klassiker-Projekt.</p>
+                <a href="https://www.ebay.de/usr/friesenfiets" class="btn" target="_blank">eBay Store öffnen</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt" class="section-anchor">
+        <h2>Kontakt & Werkstatt</h2>
+        <div class="kontakt-grid">
+            <div class="kontakt-info">
+                <h4>Werkstatt & Standort</h4>
+                <p>friesenfiets</p>
+                <p>Oldenburger Str. 102</p>
+                <p>26316 Varel (Niedersachsen)</p>
+            </div>
+            <div class="kontakt-info">
+                <h4>Telefon & Mobil</h4>
+                <p>Festnetz: 04451 84491</p>
+                <p>Mobil: 0162 1774090</p>
+            </div>
+            <div class="kontakt-info">
+                <h4>Online</h4>
+                <p>E-Mail: info@friesenfiets.de</p>
+                <p>Kleinanzeigen: friesenfiets PRO</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Friesenfiets. Alle Rechte vorbehalten.</p>
+        <p style="margin-top: 1rem;">
+            <a href="#">Impressum</a> | <a href="#">Datenschutz</a>
+        </p>
+    </footer>
+
+</body>
+</html>
+
