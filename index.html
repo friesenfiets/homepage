@@ -51,6 +51,7 @@
             text-transform: uppercase;
             color: var(--accent-chrome);
             text-decoration: none;
+            cursor: pointer;
         }
 
         nav a {
@@ -60,6 +61,7 @@
             margin-left: 1.5rem;
             transition: color 0.3s;
             font-weight: 500;
+            cursor: pointer;
         }
 
         nav a:hover, nav a.active {
@@ -151,12 +153,11 @@
     <!-- NAVIGATION -->
     <header>
         <div class="nav-container">
-            <a href="#" class="logo" onclick="showSection('home')">Friesenfiets</a>
+            <div class="logo" onclick="showSection(event, 'home')">Friesenfiets</div>
             <nav>
-                <a href="#" id="nav-home" class="active" onclick="showSection('home')">Startseite</a>
-                <a href="#" id="nav-raeder" onclick="showSection('raeder')">Aktuelle Räder</a>
-                <a href="#" id="nav-teile" onclick="showSection('teile')">Teile</a>
-                <a href="#" id="nav-kontakt" onclick="showSection('home')">Kontakt</a>
+                <a href="#" id="nav-home" class="active" onclick="showSection(event, 'home')">Startseite</a>
+                <a href="#" id="nav-raeder" onclick="showSection(event, 'raeder')">Aktuelle Räder</a>
+                <a href="#" id="nav-teile" onclick="showSection(event, 'teile')">Teile</a>
             </nav>
         </div>
     </header>
@@ -205,15 +206,15 @@
         </section>
     </div>
 
-    <!-- REITER 2: AKTUELLE RÄDER (KLEINANZEIGEN PRO KORRIGIERT) -->
+    <!-- REITER 2: AKTUELLE RÄDER (KLEINANZEIGEN PRO) -->
     <div id="section-raeder" class="shop-section">
         <h2>Aktuelle Räder (Kleinanzeigen PRO)</h2>
         <div class="fallback-notice">
             <p>Sollte die Live-Vorschau unten nicht korrekt laden, klicken Sie bitte direkt auf den Button:</p>
-            <a href="https://www.kleinanzeigen.de/pro/friesenfiets" class="btn" target="_blank">Kleinanzeigen PRO direkt öffnen</a>
+            <a href="https://kleinanzeigen.de" class="btn" target="_blank">Kleinanzeigen PRO direkt öffnen</a>
         </div>
         <div class="iframe-container">
-            <iframe src="https://www.kleinanzeigen.de/pro/friesenfiets"></iframe>
+            <iframe src="https://kleinanzeigen.de"></iframe>
         </div>
     </div>
 
@@ -237,21 +238,25 @@
         </p>
     </footer>
 
-    <!-- STEUERUNG DER REITER -->
+    <!-- INTERAKTIVE STEUERUNG DER REITER -->
     <script>
-        function showSection(sectionId) {
+        function showSection(event, sectionId) {
+            // Verhindert das Neuladen der Seite durch das '#' im Link
+            if (event) {
+                event.preventDefault();
+            }
+            
+            // Alle Bereiche unsichtbar schalten
             document.getElementById('section-home').style.display = 'none';
             document.getElementById('section-raeder').style.display = 'none';
             document.getElementById('section-teile').style.display = 'none';
             
+            // Alle Navigations-Reiter visuell zurücksetzen
             document.getElementById('nav-home').classList.remove('active');
             document.getElementById('nav-raeder').classList.remove('active');
             document.getElementById('nav-teile').classList.remove('active');
 
+            // Nur das ausgewählte Fenster und den aktiven Reiter anzeigen
             if(sectionId === 'home') {
                 document.getElementById('section-home').style.display = 'block';
-                document.getElementById('nav-home').classList.add('active');
-            } else if(sectionId === 'raeder') {
-                document.getElementById('section-raeder').style.display = 'block';
-                document.getElementById('nav-raeder').classList.add('active');
-            } else if(sectionId === 'teile') {
+
