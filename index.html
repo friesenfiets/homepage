@@ -4,6 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friesenfiets | Klassische Stahlrennräder & Retro-MTBs</title>
+    
+    <!-- AUSFALLSICHERE STEUERUNG DER REITER -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const linkHome = document.getElementById('nav-home');
+            const linkRaeder = document.getElementById('nav-raeder');
+            const linkTeile = document.getElementById('nav-teile');
+            const logo = document.getElementById('nav-logo');
+
+            const secHome = document.getElementById('section-home');
+            const secRaeder = document.getElementById('section-raeder');
+            const secTeile = document.getElementById('section-teile');
+
+            function switchTab(targetId) {
+                // Alle Sektionen verstecken
+                secHome.style.display = 'none';
+                secRaeder.style.display = 'none';
+                secTeile.style.display = 'none';
+
+                // Alle Links visuell zurücksetzen
+                linkHome.classList.remove('active');
+                linkRaeder.classList.remove('active');
+                linkTeile.classList.remove('active');
+
+                // Ziel aktivieren
+                if (targetId === 'home') {
+                    secHome.style.display = 'block';
+                    linkHome.classList.add('active');
+                } else if (targetId === 'raeder') {
+                    secRaeder.style.display = 'block';
+                    linkRaeder.classList.add('active');
+                } else if (targetId === 'teile') {
+                    secTeile.style.display = 'block';
+                    linkTeile.classList.add('active');
+                }
+                
+                window.scrollTo({top: 0});
+            }
+
+            // Klick-Ereignisse sauber zuweisen
+            linkHome.addEventListener('click', function(e) { e.preventDefault(); switchTab('home'); });
+            linkRaeder.addEventListener('click', function(e) { e.preventDefault(); switchTab('raeder'); });
+            linkTeile.addEventListener('click', function(e) { e.preventDefault(); switchTab('teile'); });
+            logo.addEventListener('click', function(e) { e.preventDefault(); switchTab('home'); });
+        });
+    </script>
+
     <style>
         /* --- STYLING (DARK & PREMIUM) --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -153,11 +200,11 @@
     <!-- NAVIGATION -->
     <header>
         <div class="nav-container">
-            <div class="logo" onclick="showSection(event, 'home')">Friesenfiets</div>
+            <div id="nav-logo" class="logo">Friesenfiets</div>
             <nav>
-                <a href="#" id="nav-home" class="active" onclick="showSection(event, 'home')">Startseite</a>
-                <a href="#" id="nav-raeder" onclick="showSection(event, 'raeder')">Aktuelle Räder</a>
-                <a href="#" id="nav-teile" onclick="showSection(event, 'teile')">Teile</a>
+                <a href="#" id="nav-home" class="active">Startseite</a>
+                <a href="#" id="nav-raeder">Aktuelle Räder</a>
+                <a href="#" id="nav-teile">Teile</a>
             </nav>
         </div>
     </header>
@@ -211,52 +258,3 @@
         <h2>Aktuelle Räder (Kleinanzeigen PRO)</h2>
         <div class="fallback-notice">
             <p>Sollte die Live-Vorschau unten nicht korrekt laden, klicken Sie bitte direkt auf den Button:</p>
-            <a href="https://kleinanzeigen.de" class="btn" target="_blank">Kleinanzeigen PRO direkt öffnen</a>
-        </div>
-        <div class="iframe-container">
-            <iframe src="https://kleinanzeigen.de"></iframe>
-        </div>
-    </div>
-
-    <!-- REITER 3: TEILE (EBAY SHOP) -->
-    <div id="section-teile" class="shop-section">
-        <h2>Unser Teilemarkt (eBay)</h2>
-        <div class="fallback-notice">
-            <p>Sollte die Live-Vorschau unten nicht korrekt laden, klicken Sie bitte direkt auf den Button:</p>
-            <a href="https://ebay.de" class="btn" target="_blank">eBay Shop direkt öffnen</a>
-        </div>
-        <div class="iframe-container">
-            <iframe src="https://ebay.de"></iframe>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 Friesenfiets. Alle Rechte vorbehalten.</p>
-        <p style="margin-top: 1rem;">
-            <a href="#">Impressum</a> | <a href="#">Datenschutz</a>
-        </p>
-    </footer>
-
-    <!-- INTERAKTIVE STEUERUNG DER REITER -->
-    <script>
-        function showSection(event, sectionId) {
-            // Verhindert das Neuladen der Seite durch das '#' im Link
-            if (event) {
-                event.preventDefault();
-            }
-            
-            // Alle Bereiche unsichtbar schalten
-            document.getElementById('section-home').style.display = 'none';
-            document.getElementById('section-raeder').style.display = 'none';
-            document.getElementById('section-teile').style.display = 'none';
-            
-            // Alle Navigations-Reiter visuell zurücksetzen
-            document.getElementById('nav-home').classList.remove('active');
-            document.getElementById('nav-raeder').classList.remove('active');
-            document.getElementById('nav-teile').classList.remove('active');
-
-            // Nur das ausgewählte Fenster und den aktiven Reiter anzeigen
-            if(sectionId === 'home') {
-                document.getElementById('section-home').style.display = 'block';
-
