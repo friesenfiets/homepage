@@ -73,12 +73,13 @@
             color: var(--accent-chrome);
         }
 
-        /* NEU: Großes Bild über die volle Breite */
+        /* Großes Hintergrund-Bild (Hero Banner) */
         .hero-banner {
+            position: relative;
             width: 100%;
-            height: 50vh; /* Nutzt die halbe Bildschirmhöhe (ideal für Querformate) */
-            min-height: 300px; /* Verhindert, dass das Bild auf Smartphones zu schmal wird */
-            max-height: 600px; /* Verhindert, dass das Bild auf riesigen Monitoren alles erschlägt */
+            height: 60vh; /* Etwas erhöht für mehr Platz bei rechtslastigem Text */
+            min-height: 400px;
+            max-height: 650px;
             overflow: hidden;
             border-bottom: 1px solid var(--border-color);
         }
@@ -86,9 +87,50 @@
         .hero-banner img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Schneidet das Bild proportional zu, statt es zu quetschen */
-            object-position: center; /* Zentriert den Bildfokus */
+            object-fit: cover;
+            object-position: center;
             display: block;
+        }
+
+        /* Sanfter Verlauf von transparent (links) zu dunkel (rechts) für optimale Lesbarkeit */
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.75) 100%);
+            z-index: 1;
+        }
+
+        /* Rechtsbündige Text-Positionierung */
+        .hero-overlay-text {
+            position: absolute;
+            top: 50%;
+            right: 10%; /* Abstand zum rechten Bildschirmrand */
+            transform: translateY(-50%);
+            z-index: 2;
+            text-align: right; /* Text rechtsbündig ausrichten */
+            width: 100%;
+            max-width: 550px; /* Kompakt gehalten, damit es elegant aussieht */
+            padding: 0 1.5rem;
+        }
+
+        .hero-overlay-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: #ffffff;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.6);
+        }
+
+        .hero-overlay-text p {
+            font-size: 1.25rem;
+            color: #e5e5ea;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
         }
 
         /* Hauptbereiche */
@@ -100,27 +142,6 @@
 
         .section-anchor {
             scroll-margin-top: 5rem;
-        }
-
-        /* Leicht angepasst: Marge oben reduziert, da nun das Banner darüber liegt */
-        .hero { 
-            text-align: center; 
-            margin: 4rem auto 2rem auto; 
-            max-width: 800px; 
-            padding: 0 1.5rem;
-        }
-        
-        .hero h1 { 
-            font-size: 3.5rem; 
-            font-weight: 800; 
-            margin-bottom: 1.5rem; 
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-        
-        .hero p { 
-            font-size: 1.25rem; 
-            color: var(--text-muted); 
         }
 
         .grid { 
@@ -237,12 +258,27 @@
             text-decoration: underline;
         }
 
+        /* Responsive Anpassungen */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
             .nav-container { flex-direction: column; gap: 1rem; text-align: center; }
             nav a { margin: 0 0.5rem; }
             .shop-grid { grid-template-columns: 1fr; }
-            .hero-banner { height: 35vh; } /* Etwas flacher auf Mobilgeräten */
+            
+            /* Auf Smartphones wird der Text zentriert, da rechtsbündig sonst zu schmal wird */
+            .hero-banner { height: 50vh; }
+            .hero-banner::after {
+                background: rgba(0, 0, 0, 0.5); /* Gleichmäßige Abdunklung auf dem Handy */
+            }
+            .hero-overlay-text {
+                right: auto;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                max-width: 90%;
+            }
+            .hero-overlay-text h1 { font-size: 2.2rem; }
+            .hero-overlay-text p { font-size: 1rem; }
         }
     </style>
 </head>
@@ -263,16 +299,14 @@
         </div>
     </header>
 
-    <!-- NEU: Großes Hintergrund-/Hero-Bild direkt unter der Top-Zeile -->
-    <div class="hero-banner">
+    <!-- HINTERGRUND-BILD MIT RECHTSBÜNDIGEM TEXT -->
+    <div class="hero-banner" id="home">
         <img src="top.jpg" alt="Friesenfiets Classic Bikes">
+        <div class="hero-overlay-text">
+            <h1>Echte Klassiker.<br>Wieder auf der Straße.</h1>
+            <p>Bei Friesenfiets retten wir die Ikonen der Fahrradgeschichte. Handwerk, Leidenschaft und Liebe zu klassischem Stahl.</p>
+        </div>
     </div>
-
-    <!-- STARTSEITE HERO -->
-    <main class="hero" id="home">
-        <h1>Echte Klassiker.<br>Wieder auf der Straße.</h1>
-        <p>Bei Friesenfiets retten wir die Ikonen der Fahrradgeschichte. Handwerk, Leidenschaft und Liebe zu klassischem Stahl.</p>
-    </main>
 
     <!-- PHILOSOPHIE -->
     <section id="philosophie" class="section-anchor">
@@ -288,26 +322,3 @@
             </div>
             <div class="card">
                 <h3>Detailverliebtheit</h3>
-                <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- MARKTPLATZ BEREICH -->
-    <section id="aktuelle-raeder" class="section-anchor">
-        <h2>Angebote & Verkaufsportale</h2>
-        <div class="shop-grid">
-            <div class="shop-box">
-                <h3>Aktuelle Räder</h3>
-                <p>Besuchen Sie unsere offizielle Kleinanzeigen PRO Seite. Hier finden Sie unsere aktuell fahrbereiten Komplett-Räder, Rahmen-Sets und edlen Commuter-Umbauten.</p>
-                <a href="https://kleinanzeigen.de" class="btn" target="_blank">Kleinanzeigen PRO öffnen</a>
-            </div>
-            
-            <div class="shop-box">
-                <h3>Direktanfragen</h3>
-                <p>Du suchst ein ganz bestimmtes Modell, eine spezielle Rahmengröße oder planst einen Custom-Stahlaufbau? Lass uns dein Traumprojekt gemeinsam realisieren.</p>
-                <a href="#kontakt" class="btn">Projekt anfragen</a>
-            </div>
-        </div>
-    </section>
-
