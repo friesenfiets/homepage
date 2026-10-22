@@ -211,7 +211,7 @@
         .slide.is-active { opacity: 1; visibility: visible; }
         .slide-text h3 { font-size: 1.8rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
         .slide-text p { color: var(--text-muted); font-size: 1.1rem; }
-        .slide-media { aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        .slide-media { aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
         .slide-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .placeholder {
             width: 100%; height: 100%;
@@ -231,6 +231,18 @@
         }
         .slider-dots button[aria-current="true"] { background: var(--accent-chrome); border-color: var(--accent-chrome); }
         .slider-dots button:focus-visible { outline: 2px solid var(--accent-chrome); outline-offset: 3px; }
+
+        /* Heller Zwischenbereich */
+        .band-light { background: #f5f5f7; color: #111; }
+        .band-light #philosophie { padding-bottom: 6rem; }
+        .band-light h2 { color: #111; border-bottom-color: #d2d2d7; }
+        .band-light .slider { background: transparent; border: none; padding: 0; }
+        .band-light .slide-text p { color: #515154; }
+        .band-light .slide-media { border-color: #d2d2d7; }
+        .band-light .placeholder { background: linear-gradient(135deg, #e5e5ea 0%, #d2d2d7 100%); color: #6e6e73; }
+        .band-light .slider-dots button { border-color: #6e6e73; }
+        .band-light .slider-dots button[aria-current="true"] { background: #111; border-color: #111; }
+        .band-light .slider-dots button:focus-visible { outline-color: #111; }
 
         /* Räder & Teile nebeneinander */
         .shop-grid {
@@ -274,7 +286,7 @@
             section { scroll-margin-top: 7rem; padding-top: 4rem; }
             footer { margin-top: 4rem; }
             .shop-box-full { padding: 3rem 1.5rem; }
-            .slider { padding: 1.5rem; }
+            .band-light #philosophie { padding-bottom: 4rem; }
             .slide { grid-template-columns: 1fr; gap: 1.5rem; }
             .slide-text h3 { font-size: 1.5rem; }
             .slide-media { order: -1; }
@@ -328,6 +340,7 @@
         </div>
 
         <!-- PHILOSOPHIE (automatischer Durchlauf) -->
+        <div class="band-light">
         <section id="philosophie">
             <h2>Das Handwerk</h2>
             <div class="slider" id="handwerk-slider" role="region" aria-roledescription="Karussell" aria-label="Das Handwerk">
@@ -338,8 +351,7 @@
                             <p>Egal ob legendäre Columbus-Rohre, Reynolds oder Tange: Wir lieben das Fahrgefühl und die Ästhetik alter Stahlrennräder aus den 70ern, 80ern und 90ern.</p>
                         </div>
                         <div class="slide-media">
-    <img src="stahl.jpg" alt="Klassisches Stahlrennrad">
-</div>
+                            <img src="stahl.jpg" alt="Klassisches Stahlrennrad" loading="lazy">
                         </div>
                     </article>
                     <article class="slide">
@@ -348,8 +360,7 @@
                             <p>Die Geburtsstunde des Mountainbikes. Wir bringen die unzerstörbaren Klassiker der 26-Zoll-Ära mit zeitgenössischen oder modernen Komponenten zurück ins Gelände.</p>
                         </div>
                         <div class="slide-media">
-                            <!-- Bild einsetzen: <img src="mtb.jpg" alt="Retro-Mountainbike"> und den Platzhalter löschen -->
-                            <div class="placeholder">Bild folgt</div>
+                            <img src="mtb.jpg" alt="Retro-Mountainbike" loading="lazy">
                         </div>
                     </article>
                     <article class="slide">
@@ -358,14 +369,14 @@
                             <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
                         </div>
                         <div class="slide-media">
-                            <!-- Bild einsetzen: <img src="detail.jpg" alt="Detailaufnahme einer Restaurierung"> und den Platzhalter löschen -->
-                            <div class="placeholder">Bild folgt</div>
+                            <img src="detail.jpg" alt="Detailaufnahme einer Restaurierung" loading="lazy">
                         </div>
                     </article>
                 </div>
                 <div class="slider-dots" id="handwerk-dots"></div>
             </div>
         </section>
+        </div>
 
         <!-- AKTUELLE RÄDER & TEILE -->
         <section id="angebote">
