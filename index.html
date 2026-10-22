@@ -211,8 +211,13 @@
         .slide.is-active { opacity: 1; visibility: visible; }
         .slide-text h3 { font-size: 1.8rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
         .slide-text p { color: var(--text-muted); font-size: 1.1rem; }
-        .slide-media { aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
-        .slide-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .slide-media { position: relative; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        .slide-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.8s; }
+        .slide-media img.is-shown { opacity: 1; }
+        .media-dots { position: absolute; left: 0; right: 0; bottom: 0.8rem; display: flex; justify-content: center; gap: 0.5rem; z-index: 2; }
+        .media-dots button { width: 9px; height: 9px; border-radius: 50%; border: 1px solid #fff; background: rgba(255,255,255,0.35); box-shadow: 0 0 4px rgba(0,0,0,0.5); cursor: pointer; padding: 0; }
+        .media-dots button[aria-current="true"] { background: #fff; }
+        .media-dots button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
         .placeholder {
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
@@ -308,7 +313,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .card, .shop-box-full, .btn, nav a, .slide { transition: none; }
+            .card, .shop-box-full, .btn, nav a, .slide, .slide-media img { transition: none; }
             .card:hover, .shop-box-full:hover { transform: none; }
         }
     </style>
@@ -354,7 +359,18 @@
                             <p>Egal ob legendäre Columbus-Rohre, Reynolds oder Tange: Wir lieben das Fahrgefühl und die Ästhetik alter Stahlrennräder aus den 70ern, 80ern und 90ern.</p>
                         </div>
                         <div class="slide-media">
-                            <img src="stahl.jpg" alt="Klassisches Stahlrennrad" loading="lazy">
+                            <img src="stahl.jpg" alt="Klassisches Stahlrennrad" class="is-shown">
+                            <img src="stahl1.jpg" alt="Stahlrennrad, Detail" loading="lazy">
+                            <img src="stahl2.jpg" alt="Stahlrennrad, Gesamtansicht" loading="lazy">
+                        </div>
+                    </article>
+                    <article class="slide">
+                        <div class="slide-text">
+                            <h3>Klassische Damenräder</h3>
+                            <p>Schlanke Mixte-Rahmen, zierliche Stahlrohre und fein geschwungene Linien: Klassische Damenräder zeigen, wie viel Schönheit in filigraner Konstruktion steckt. Wir bringen sie mit Liebe zum Detail zurück auf die Straße, leicht, elegant und alltagstauglich.</p>
+                        </div>
+                        <div class="slide-media">
+                            <img src="damen.jpg" alt="Klassisches Damenrad mit Mixte-Rahmen" class="is-shown" loading="lazy">
                         </div>
                     </article>
                     <article class="slide">
@@ -363,7 +379,7 @@
                             <p>Die Geburtsstunde des Mountainbikes. Wir bringen die unzerstörbaren Klassiker der 26-Zoll-Ära mit zeitgenössischen oder modernen Komponenten zurück ins Gelände.</p>
                         </div>
                         <div class="slide-media">
-                            <img src="mtb.jpg" alt="Retro-Mountainbike" loading="lazy">
+                            <img src="mtb.jpg" alt="Retro-Mountainbike" class="is-shown" loading="lazy">
                         </div>
                     </article>
                     <article class="slide">
@@ -372,7 +388,7 @@
                             <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
                         </div>
                         <div class="slide-media">
-                            <img src="detail.jpg" alt="Detailaufnahme einer Restaurierung" loading="lazy">
+                            <img src="detail.jpg" alt="Detailaufnahme einer Restaurierung" class="is-shown" loading="lazy">
                         </div>
                     </article>
                 </div>
@@ -435,29 +451,58 @@
             var slider = document.getElementById('handwerk-slider');
             var slides = slider.querySelectorAll('.slide');
             var dotsBox = document.getElementById('handwerk-dots');
-            var current = 0, timer = null, INTERVAL = 4000;
+            var cur = 0, imgIdx = 0, timer = null, INTERVAL = 4000;
             var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var imgs = [], subDots = [], dots;
 
             slides.forEach(function (slide, i) {
+                // Hauptpunkte
                 var b = document.createElement('button');
                 b.type = 'button';
                 b.setAttribute('aria-label', 'Abschnitt ' + (i + 1) + ': ' + slide.querySelector('h3').textContent);
-                b.addEventListener('click', function () { show(i); restart(); });
+                b.addEventListener('click', function () { show(i, 0); restart(); });
                 dotsBox.appendChild(b);
-            });
-            var dots = dotsBox.querySelectorAll('button');
 
-            function show(n) {
-                current = (n + slides.length) % slides.length;
+                // Bilder und Bildpunkte
+                var list = slide.querySelectorAll('.slide-media img');
+                imgs.push(list);
+                subDots.push([]);
+                if (list.length > 1) {
+                    var box = document.createElement('div');
+                    box.className = 'media-dots';
+                    list.forEach(function (im, k) {
+                        var d = document.createElement('button');
+                        d.type = 'button';
+                        d.setAttribute('aria-label', 'Bild ' + (k + 1));
+                        d.addEventListener('click', function () { show(i, k); restart(); });
+                        box.appendChild(d);
+                        subDots[i].push(d);
+                    });
+                    slide.querySelector('.slide-media').appendChild(box);
+                }
+            });
+            dots = dotsBox.querySelectorAll('button');
+
+            function show(n, k) {
+                cur = (n + slides.length) % slides.length;
+                imgIdx = k || 0;
                 slides.forEach(function (s, i) {
-                    s.classList.toggle('is-active', i === current);
-                    s.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+                    s.classList.toggle('is-active', i === cur);
+                    s.setAttribute('aria-hidden', i === cur ? 'false' : 'true');
                 });
                 dots.forEach(function (d, i) {
-                    if (i === current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+                    if (i === cur) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+                });
+                imgs[cur].forEach(function (im, j) { im.classList.toggle('is-shown', j === imgIdx); });
+                subDots[cur].forEach(function (d, j) {
+                    if (j === imgIdx) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
                 });
             }
-            function start() { if (!reduced && !timer) timer = setInterval(function () { show(current + 1); }, INTERVAL); }
+            function next() {
+                if (imgIdx + 1 < imgs[cur].length) show(cur, imgIdx + 1);
+                else show(cur + 1, 0);
+            }
+            function start() { if (!reduced && !timer) timer = setInterval(next, INTERVAL); }
             function stop() { clearInterval(timer); timer = null; }
             function restart() { stop(); start(); }
 
@@ -466,7 +511,7 @@
             slider.addEventListener('focusin', stop);
             slider.addEventListener('focusout', start);
 
-            show(0);
+            show(0, 0);
             start();
         })();
     </script>
