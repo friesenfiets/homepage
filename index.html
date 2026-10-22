@@ -232,15 +232,17 @@
         .slider-dots button[aria-current="true"] { background: var(--accent-chrome); border-color: var(--accent-chrome); }
         .slider-dots button:focus-visible { outline: 2px solid var(--accent-chrome); outline-offset: 3px; }
 
-        /* Heller Zwischenbereich */
-        .band-light { background: #f5f5f7; color: #111; }
-        .band-light #philosophie { padding-bottom: 6rem; }
-        .band-light h2 { color: #111; border-bottom-color: #d2d2d7; }
+        /* Grauer Zwischenbereich */
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .band-light { background: #d8d8dc; color: #111; }
+        .band-light #philosophie { max-width: 1300px; padding-top: 4.5rem; padding-bottom: 4.5rem; }
+        .band-light .slide { grid-template-columns: 1fr 1.8fr; gap: 3.5rem; }
         .band-light .slider { background: transparent; border: none; padding: 0; }
-        .band-light .slide-text p { color: #515154; }
-        .band-light .slide-media { border-color: #d2d2d7; }
-        .band-light .placeholder { background: linear-gradient(135deg, #e5e5ea 0%, #d2d2d7 100%); color: #6e6e73; }
-        .band-light .slider-dots button { border-color: #6e6e73; }
+        .band-light .slide-text h3 { color: #111; }
+        .band-light .slide-text p { color: #3a3a3c; }
+        .band-light .slide-media { border-color: #b8b8be; }
+        .band-light .placeholder { background: linear-gradient(135deg, #c8c8cd 0%, #b8b8be 100%); color: #55555a; }
+        .band-light .slider-dots button { border-color: #55555a; }
         .band-light .slider-dots button[aria-current="true"] { background: #111; border-color: #111; }
         .band-light .slider-dots button:focus-visible { outline-color: #111; }
 
@@ -286,7 +288,8 @@
             section { scroll-margin-top: 7rem; padding-top: 4rem; }
             footer { margin-top: 4rem; }
             .shop-box-full { padding: 3rem 1.5rem; }
-            .band-light #philosophie { padding-bottom: 4rem; }
+            .band-light #philosophie { padding-top: 3rem; padding-bottom: 3rem; }
+            .band-light .slide { grid-template-columns: 1fr; gap: 1.5rem; }
             .slide { grid-template-columns: 1fr; gap: 1.5rem; }
             .slide-text h3 { font-size: 1.5rem; }
             .slide-media { order: -1; }
@@ -342,7 +345,7 @@
         <!-- PHILOSOPHIE (automatischer Durchlauf) -->
         <div class="band-light">
         <section id="philosophie">
-            <h2>Das Handwerk</h2>
+            <h2 class="sr-only">Das Handwerk</h2>
             <div class="slider" id="handwerk-slider" role="region" aria-roledescription="Karussell" aria-label="Das Handwerk">
                 <div class="slides">
                     <article class="slide is-active">
