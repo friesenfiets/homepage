@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friesenfiets | Klassische Stahlrennräder & Retro-MTBs</title>
+    <meta name="description" content="Friesenfiets restauriert klassische Stahlrennräder und Retro-MTBs. Aktuelle Räder auf Kleinanzeigen, klassische Anbauteile im eBay-Shop.">
+    <meta property="og:title" content="Friesenfiets | Klassische Stahlrennräder & Retro-MTBs">
+    <meta property="og:description" content="Echte Klassiker. Wieder auf der Straße.">
+    <meta property="og:image" content="top.jpg">
     <style>
         /* --- STYLING (DARK & PREMIUM) --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+
         :root {
             --bg-dark: #0a0a0a;
             --bg-card: #141414;
@@ -17,9 +21,7 @@
             --accent-chrome: #ffffff;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -29,10 +31,27 @@
             overflow-x: hidden;
         }
 
+        a:focus-visible, .btn:focus-visible {
+            outline: 2px solid var(--accent-chrome);
+            outline-offset: 3px;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: var(--accent-chrome);
+            color: var(--bg-dark);
+            padding: 0.6rem 1rem;
+            z-index: 2000;
+        }
+        .skip-link:focus { left: 0; }
+
         /* Header & Navigation */
         header {
             background-color: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
@@ -48,17 +67,8 @@
             align-items: center;
         }
 
-        .logo-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            height: 45px;
-            width: auto;
-            display: block;
-        }
+        .logo-link { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 45px; width: auto; display: block; }
 
         nav a {
             color: var(--text-muted);
@@ -68,12 +78,9 @@
             transition: color 0.3s;
             font-weight: 500;
         }
+        nav a:hover { color: var(--accent-chrome); }
 
-        nav a:hover {
-            color: var(--accent-chrome);
-        }
-
-        /* Großes Hintergrund-Bild (Hero Banner) */
+        /* Hero Banner */
         .hero-banner {
             position: relative;
             width: 100%;
@@ -92,14 +99,10 @@
             display: block;
         }
 
-        /* Kaum wahrnehmbare Abdunklung auf der rechten Seite */
         .hero-banner::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.25) 100%);
             z-index: 1;
         }
@@ -117,7 +120,7 @@
         }
 
         .hero-overlay-text h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
             letter-spacing: -0.03em;
@@ -127,7 +130,7 @@
         }
 
         .hero-overlay-text p {
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
             color: #f5f5f7;
             text-shadow: 0 4px 15px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.9);
         }
@@ -137,40 +140,35 @@
             max-width: 1100px;
             margin: 0 auto;
             padding: 6rem 1.5rem 2rem 1.5rem;
-        }
-
-        .section-anchor {
             scroll-margin-top: 5rem;
         }
 
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 2rem; 
-        }
-        
-        .card { 
-            background-color: var(--bg-card); 
-            border: 1px solid var(--border-color); 
-            padding: 2.5rem; 
-            border-radius: 12px; 
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        
-        .card:hover {
-            border-color: #444;
-            transform: translateY(-4px);
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
         }
 
-        h2 { 
-            font-size: 2rem; 
-            margin-bottom: 2rem; 
-            border-bottom: 1px solid var(--border-color); 
-            padding-bottom: 0.5rem; 
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover { border-color: #444; transform: translateY(-4px); }
+        .card h3 { margin-bottom: 0.8rem; }
+        .card p { color: var(--text-muted); }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
             letter-spacing: -0.02em;
         }
 
-        /* Vollbreite Box für Einzelplatzierungen */
+        /* Vollbreite Boxen für Verweise */
         .shop-box-full {
             background: linear-gradient(135deg, #141414 0%, #0d0d0d 100%);
             border: 1px solid var(--border-color);
@@ -181,29 +179,9 @@
             max-width: 800px;
             margin: 0 auto;
         }
-
-        .shop-box-full:hover {
-            border-color: var(--accent-chrome);
-            transform: translateY(-2px);
-        }
-
-        .shop-box-full h3 {
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-            color: #ffffff;
-        }
-
-        .shop-box-full p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Zentrierter Button unter Grids */
-        .grid-footer-action {
-            text-align: center;
-            margin-top: 2.5rem;
-        }
+        .shop-box-full:hover { border-color: var(--accent-chrome); transform: translateY(-2px); }
+        .shop-box-full h3 { margin-bottom: 1rem; font-size: 1.8rem; color: #ffffff; }
+        .shop-box-full p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; }
 
         .btn {
             display: inline-block;
@@ -217,70 +195,112 @@
         }
         .btn:hover { opacity: 0.9; }
 
-        /* Kontakt & Info Styling */
-        .kontakt-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 2rem; 
-            margin-top: 2rem; 
+        /* Slider "Das Handwerk" */
+        .slider { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; }
+        .slides { display: grid; }
+        .slide {
+            grid-area: 1 / 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s, visibility 0.6s;
         }
-        .kontakt-info h4 { 
-            color: var(--accent-chrome); 
-            margin-bottom: 0.5rem; 
-            font-size: 1.2rem;
+        .slide.is-active { opacity: 1; visibility: visible; }
+        .slide-text h3 { font-size: 1.8rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .slide-text p { color: var(--text-muted); font-size: 1.1rem; }
+        .slide-media { aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        .slide-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #1c1c1c 0%, #0d0d0d 100%);
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
-        .kontakt-info p { 
-            color: var(--text-muted); 
+        .slider-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 2rem; }
+        .slider-dots button {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            border: 1px solid var(--text-muted);
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
         }
-        .kontakt-info a {
-            color: var(--text-main);
-            text-decoration: none;
-        }
-        .kontakt-info a:hover {
-            text-decoration: underline;
-        }
+        .slider-dots button[aria-current="true"] { background: var(--accent-chrome); border-color: var(--accent-chrome); }
+        .slider-dots button:focus-visible { outline: 2px solid var(--accent-chrome); outline-offset: 3px; }
 
-        footer { 
-            background-color: var(--bg-card); 
-            border-top: 1px solid var(--border-color); 
-            padding: 3rem 1.5rem; 
-            text-align: center; 
-            font-size: 0.85rem; 
-            color: var(--text-muted); 
-            margin-top: 8rem; 
+        /* Räder & Teile nebeneinander */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
         }
-        footer a { 
-            color: var(--text-main); 
-            text-decoration: none; 
-            margin: 0 0.5rem; 
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
+        .shop-grid .shop-box-full { max-width: none; margin: 0; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; }
+        .shop-grid .shop-box-full p { flex-grow: 1; }
+        .shop-grid .shop-box-full { scroll-margin-top: 6rem; }
 
-        /* Responsive Anpassungen */
+        /* Kontakt */
+        .kontakt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .kontakt-info h4 { color: var(--accent-chrome); margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .kontakt-info p { color: var(--text-muted); }
+        .kontakt-info a { color: var(--text-main); text-decoration: none; }
+        .kontakt-info a:hover { text-decoration: underline; }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8rem;
+        }
+        footer a { color: var(--text-main); text-decoration: none; margin: 0 0.5rem; }
+        footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 1rem; text-align: center; }
-            nav a { margin: 0 0.5rem; }
-            
+            .nav-container { flex-direction: column; gap: 0.5rem; text-align: center; padding: 0.6rem 1rem; }
+            .logo-img { height: 36px; }
+            nav a { margin: 0 0.5rem; font-size: 0.9rem; }
+            section { scroll-margin-top: 7rem; padding-top: 4rem; }
+            footer { margin-top: 4rem; }
+            .shop-box-full { padding: 3rem 1.5rem; }
+            .slider { padding: 1.5rem; }
+            .slide { grid-template-columns: 1fr; gap: 1.5rem; }
+            .slide-text h3 { font-size: 1.5rem; }
+            .slide-media { order: -1; }
+            .shop-grid .shop-box-full { scroll-margin-top: 8rem; }
+
             .hero-banner { height: 50vh; }
-            .hero-banner::after {
-                background: rgba(0, 0, 0, 0.4);
-            }
+            .hero-banner::after { background: rgba(0, 0, 0, 0.4); }
             .hero-overlay-text {
                 right: auto;
                 left: 50%;
-                top: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center;
                 max-width: 90%;
             }
-            .hero-overlay-text h1 { font-size: 2.2rem; }
-            .hero-overlay-text p { font-size: 1rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .card, .shop-box-full, .btn, nav a, .slide { transition: none; }
+            .card:hover, .shop-box-full:hover { transform: none; }
         }
     </style>
 </head>
 <body>
+
+    <a href="#philosophie" class="skip-link">Zum Inhalt springen</a>
 
     <!-- NAVIGATION -->
     <header>
@@ -288,7 +308,7 @@
             <a href="#home" class="logo-link">
                 <img src="logo.png" alt="Friesenfiets Logo" class="logo-img">
             </a>
-            <nav>
+            <nav aria-label="Hauptnavigation">
                 <a href="#philosophie">Philosophie</a>
                 <a href="#aktuelle-raeder">Aktuelle Räder</a>
                 <a href="#teile">Teile</a>
@@ -297,36 +317,145 @@
         </div>
     </header>
 
-    <!-- HINTERGRUND-BILD MIT RECHTSBÜNDIGEM TEXT -->
-    <div class="hero-banner" id="home">
-        <img src="top.jpg" alt="Friesenfiets Classic Bikes">
-        <div class="hero-overlay-text">
-            <h1>Echte Klassiker.<br>Wieder auf der Straße.</h1>
-            <p>Bei Friesenfiets retten wir die Ikonen der Fahrradgeschichte. Handwerk, Leidenschaft und Liebe zu klassischem Stahl.</p>
-        </div>
-    </div>
-
-    <!-- PHILOSOPHIE -->
-    <section id="philosophie" class="section-anchor">
-        <h2>Das Handwerk</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Klassischer Stahl</h3>
-                <p>Egal ob legendäre Columbus-Rohre, Reynolds oder Tange: Wir lieben das Fahrgefühl und die Ästhetik alter Stahlrennräder aus den 70ern, 80ern und 90ern.</p>
-            </div>
-            <div class="card">
-                <h3>Retro Kult-MTBs</h3>
-                <p>Die Geburtsstunde des Mountainbikes. Wir bringen die unzerstörbaren Klassiker der 26-Zoll-Ära mit zeitgenössischen oder modernen Komponenten zurück ins Gelände.</p>
-            </div>
-            <div class="card">
-                <h3>Detailverliebtheit</h3>
-                <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
+    <main>
+        <!-- HERO -->
+        <div class="hero-banner" id="home">
+            <img src="top.jpg" alt="Friesenfiets Classic Bikes" fetchpriority="high">
+            <div class="hero-overlay-text">
+                <h1>Echte Klassiker.<br>Wieder auf der Straße.</h1>
+                <p>Bei Friesenfiets retten wir die Ikonen der Fahrradgeschichte. Handwerk, Leidenschaft und Liebe zu klassischem Stahl.</p>
             </div>
         </div>
-    </section>
 
-    <!-- AKTUELLE RÄDER -->
-    <section id="aktuelle-raeder" class="section-anchor">
-        <h2>Angebote & Verkaufsportale</h2>
-        <div class="shop-box-full">
+        <!-- PHILOSOPHIE (automatischer Durchlauf) -->
+        <section id="philosophie">
+            <h2>Das Handwerk</h2>
+            <div class="slider" id="handwerk-slider" role="region" aria-roledescription="Karussell" aria-label="Das Handwerk">
+                <div class="slides">
+                    <article class="slide is-active">
+                        <div class="slide-text">
+                            <h3>Klassischer Stahl</h3>
+                            <p>Egal ob legendäre Columbus-Rohre, Reynolds oder Tange: Wir lieben das Fahrgefühl und die Ästhetik alter Stahlrennräder aus den 70ern, 80ern und 90ern.</p>
+                        </div>
+                        <div class="slide-media">
+                            <!-- Bild einsetzen: <img src="stahl.jpg" alt="Klassisches Stahlrennrad"> und den Platzhalter löschen -->
+                            <div class="placeholder">Bild folgt</div>
+                        </div>
+                    </article>
+                    <article class="slide">
+                        <div class="slide-text">
+                            <h3>Retro Kult-MTBs</h3>
+                            <p>Die Geburtsstunde des Mountainbikes. Wir bringen die unzerstörbaren Klassiker der 26-Zoll-Ära mit zeitgenössischen oder modernen Komponenten zurück ins Gelände.</p>
+                        </div>
+                        <div class="slide-media">
+                            <!-- Bild einsetzen: <img src="mtb.jpg" alt="Retro-Mountainbike"> und den Platzhalter löschen -->
+                            <div class="placeholder">Bild folgt</div>
+                        </div>
+                    </article>
+                    <article class="slide">
+                        <div class="slide-text">
+                            <h3>Detailverliebtheit</h3>
+                            <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
+                        </div>
+                        <div class="slide-media">
+                            <!-- Bild einsetzen: <img src="detail.jpg" alt="Detailaufnahme einer Restaurierung"> und den Platzhalter löschen -->
+                            <div class="placeholder">Bild folgt</div>
+                        </div>
+                    </article>
+                </div>
+                <div class="slider-dots" id="handwerk-dots"></div>
+            </div>
+        </section>
 
+        <!-- AKTUELLE RÄDER & TEILE -->
+        <section id="angebote">
+            <h2>Räder & Teile</h2>
+            <div class="shop-grid">
+                <div class="shop-box-full" id="aktuelle-raeder">
+                    <h3>Aktuelle Räder</h3>
+                    <p>Alle fertig aufgebauten Klassiker, die aktuell zum Verkauf stehen, findest du auf unserem Kleinanzeigen-Profil.</p>
+                    <a href="https://www.kleinanzeigen.de/pro/friesenfiets" class="btn" target="_blank" rel="noopener noreferrer">Zu den Rädern auf Kleinanzeigen</a>
+                </div>
+                <div class="shop-box-full" id="teile">
+                    <h3>Teile</h3>
+                    <p>Klassische Anbauteile wie Campagnolo, Shimano und mehr: Im eBay-Shop findest du die passenden Teile für dein eigenes Projekt.</p>
+                    <a href="https://www.ebay.de/usr/friesenfiets" class="btn" target="_blank" rel="noopener noreferrer">Zum eBay-Shop</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- KONTAKT -->
+        <section id="kontakt">
+            <h2>Kontakt</h2>
+            <p style="color: var(--text-muted);">Du hast Fragen zu einem Rad, suchst ein bestimmtes Teil oder willst einen Aufbau besprechen? Schreib uns.</p>
+            <div class="kontakt-grid">
+                <div class="kontakt-info">
+                    <h4>Anschrift</h4>
+                    <!-- BITTE ANPASSEN -->
+                    <p>Friesenfiets<br>Straße und Hausnummer<br>PLZ Ort</p>
+                </div>
+                <div class="kontakt-info">
+                    <h4>E-Mail</h4>
+                    <!-- BITTE ANPASSEN -->
+                    <p><a href="mailto:info@beispiel.de">info@beispiel.de</a></p>
+                </div>
+                <div class="kontakt-info">
+                    <h4>Telefon</h4>
+                    <!-- BITTE ANPASSEN -->
+                    <p><a href="tel:+490000000000">+49 000 0000000</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Friesenfiets. Alle Rechte vorbehalten.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="impressum.html">Impressum</a>
+            <a href="datenschutz.html">Datenschutz</a>
+        </p>
+    </footer>
+
+    <script>
+        (function () {
+            var slider = document.getElementById('handwerk-slider');
+            var slides = slider.querySelectorAll('.slide');
+            var dotsBox = document.getElementById('handwerk-dots');
+            var current = 0, timer = null, INTERVAL = 4000;
+            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            slides.forEach(function (slide, i) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.setAttribute('aria-label', 'Abschnitt ' + (i + 1) + ': ' + slide.querySelector('h3').textContent);
+                b.addEventListener('click', function () { show(i); restart(); });
+                dotsBox.appendChild(b);
+            });
+            var dots = dotsBox.querySelectorAll('button');
+
+            function show(n) {
+                current = (n + slides.length) % slides.length;
+                slides.forEach(function (s, i) {
+                    s.classList.toggle('is-active', i === current);
+                    s.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+                });
+                dots.forEach(function (d, i) {
+                    if (i === current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+                });
+            }
+            function start() { if (!reduced && !timer) timer = setInterval(function () { show(current + 1); }, INTERVAL); }
+            function stop() { clearInterval(timer); timer = null; }
+            function restart() { stop(); start(); }
+
+            slider.addEventListener('mouseenter', stop);
+            slider.addEventListener('mouseleave', start);
+            slider.addEventListener('focusin', stop);
+            slider.addEventListener('focusout', start);
+
+            show(0);
+            start();
+        })();
+    </script>
+
+</body>
+</html>
