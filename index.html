@@ -251,15 +251,43 @@
         .band-light .slider-dots button[aria-current="true"] { background: #111; border-color: #111; }
         .band-light .slider-dots button:focus-visible { outline-color: #111; }
 
-        /* Räder & Teile nebeneinander */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+        /* Räder & Teile: zwei Bildkacheln */
+        #angebote { max-width: 1300px; padding-top: 4.5rem; }
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .shop-tile {
+            position: relative;
+            isolation: isolate;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            aspect-ratio: 16 / 9;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text-main);
+            background: #141414;
+            scroll-margin-top: 6rem;
+            transition: border-color 0.3s;
         }
-        .shop-grid .shop-box-full { max-width: none; margin: 0; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; }
-        .shop-grid .shop-box-full p { flex-grow: 1; }
-        .shop-grid .shop-box-full { scroll-margin-top: 6rem; }
+        .shop-tile::before {
+            content: '';
+            position: absolute; inset: 0; z-index: -2;
+            background: var(--tile-img) center / cover no-repeat;
+            transition: transform 0.6s;
+        }
+        .shop-tile::after {
+            content: '';
+            position: absolute; inset: 0; z-index: -1;
+            background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.2) 100%);
+        }
+        .shop-tile:hover { border-color: var(--accent-chrome); }
+        .shop-tile:hover::before { transform: scale(1.05); }
+        .shop-tile:focus-visible { outline: 2px solid var(--accent-chrome); outline-offset: 3px; }
+        .shop-tile h3 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 0.6rem; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+        .shop-tile p { color: #e5e5ea; max-width: 34rem; margin-bottom: 1.5rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        .shop-tile .btn { align-self: flex-start; }
 
         /* Kontakt */
         .kontakt-grid {
@@ -298,7 +326,9 @@
             .slide { grid-template-columns: 1fr; gap: 1.5rem; }
             .slide-text h3 { font-size: 1.5rem; }
             .slide-media { order: -1; }
-            .shop-grid .shop-box-full { scroll-margin-top: 8rem; }
+            #angebote { padding-top: 3rem; }
+            .shop-tile { aspect-ratio: auto; min-height: 320px; padding: 1.75rem; scroll-margin-top: 8rem; }
+            .shop-tile h3 { font-size: 1.6rem; }
 
             .hero-banner { height: 50vh; }
             .hero-banner::after { background: rgba(0, 0, 0, 0.4); }
@@ -313,7 +343,8 @@
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .card, .shop-box-full, .btn, nav a, .slide, .slide-media img { transition: none; }
+            .card, .shop-box-full, .btn, nav a, .slide, .slide-media img, .shop-tile, .shop-tile::before { transition: none; }
+            .shop-tile:hover::before { transform: none; }
             .card:hover, .shop-box-full:hover { transform: none; }
         }
     </style>
@@ -388,7 +419,7 @@
                             <p>Jede Schraube, jedes Lager und jede Muffe wird kontrolliert. Wir restaurieren im detailgetreuen Originalzustand oder bauen individuelle Restomods nach Kundenwunsch.</p>
                         </div>
                         <div class="slide-media">
-                            <img src="detail.JPG" alt="Detailaufnahme einer Restaurierung" class="is-shown" loading="lazy">
+                            <img src="detail.jpg" alt="Detailaufnahme einer Restaurierung" class="is-shown" loading="lazy">
                         </div>
                     </article>
                 </div>
@@ -399,18 +430,19 @@
 
         <!-- AKTUELLE RÄDER & TEILE -->
         <section id="angebote">
-            <h2>Räder & Teile</h2>
+            <h2 class="sr-only">Aktuelle Räder und Teile</h2>
             <div class="shop-grid">
-                <div class="shop-box-full" id="aktuelle-raeder">
+                <!-- Hintergrundbild pro Kachel: Dateiname in --tile-img ändern -->
+                <a class="shop-tile" id="aktuelle-raeder" href="https://www.kleinanzeigen.de/pro/friesenfiets" target="_blank" rel="noopener noreferrer" style="--tile-img: url('stahl.jpg');">
                     <h3>Aktuelle Räder</h3>
                     <p>Alle fertig aufgebauten Klassiker, die aktuell zum Verkauf stehen, findest du auf unserem Kleinanzeigen-Profil.</p>
-                    <a href="https://www.kleinanzeigen.de/pro/friesenfiets" class="btn" target="_blank" rel="noopener noreferrer">Zu den Rädern auf Kleinanzeigen</a>
-                </div>
-                <div class="shop-box-full" id="teile">
+                    <span class="btn">Zu den Rädern auf Kleinanzeigen<span class="sr-only"> (öffnet in neuem Tab)</span></span>
+                </a>
+                <a class="shop-tile" id="teile" href="https://www.ebay.de/usr/friesenfiets" target="_blank" rel="noopener noreferrer" style="--tile-img: url('detail.jpg');">
                     <h3>Teile</h3>
                     <p>Klassische Anbauteile wie Campagnolo, Shimano und mehr: Im eBay-Shop findest du die passenden Teile für dein eigenes Projekt.</p>
-                    <a href="https://www.ebay.de/usr/friesenfiets" class="btn" target="_blank" rel="noopener noreferrer">Zum eBay-Shop</a>
-                </div>
+                    <span class="btn">Zum eBay-Shop<span class="sr-only"> (öffnet in neuem Tab)</span></span>
+                </a>
             </div>
         </section>
 
@@ -422,12 +454,12 @@
                 <div class="kontakt-info">
                     <h4>Anschrift</h4>
                     <!-- BITTE ANPASSEN -->
-                    <p>Friesenfiets<br>Straße und Hausnummer<br>PLZ Ort</p>
+                    <p>friesenfiets<br>Oldenburger Str.102<br>26316 Varel</p>
                 </div>
                 <div class="kontakt-info">
                     <h4>E-Mail</h4>
                     <!-- BITTE ANPASSEN -->
-                    <p><a href="mailto:info@beispiel.de">info@beispiel.de</a></p>
+                    <p><a href="biemannbecker.gbr@gmail.com">info@beispiel.de</a></p>
                 </div>
                 <div class="kontakt-info">
                     <h4>Telefon</h4>
@@ -439,7 +471,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Friesenfiets. Alle Rechte vorbehalten.</p>
+        <p>&copy; 2026 friesenfiets. Alle Rechte vorbehalten.</p>
         <p style="margin-top: 0.5rem;">
             <a href="impressum.html">Impressum</a>
             <a href="datenschutz.html">Datenschutz</a>
