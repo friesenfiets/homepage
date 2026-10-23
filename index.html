@@ -289,35 +289,23 @@
         .shop-tile p { color: #e5e5ea; max-width: 34rem; margin-bottom: 1.5rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
         .shop-tile .btn { align-self: flex-start; }
 
-        /* Kontakt & Karte */
-        #kontakt { max-width: 1300px; padding-top: 4.5rem; }
-        .kontakt-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; align-items: stretch; }
-        .kontakt-card {
-            background: linear-gradient(135deg, #141414 0%, #0d0d0d 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
-        .kontakt-card h3 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 0.8rem; }
-        .kontakt-intro { color: var(--text-muted); margin-bottom: 2rem; }
-        .kontakt-list { margin-bottom: 0; }
-        .kontakt-list > div { margin-bottom: 1.25rem; }
-        .kontakt-list dt { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
-        .kontakt-list dd { font-size: 1.1rem; }
-        .kontakt-list a { color: var(--text-main); text-decoration: none; }
+        /* Kontakt & Karte: offen, eierschalenfarbenes Band */
+        .band-light #kontakt { max-width: 1300px; padding-top: 5rem; padding-bottom: 5rem; }
+        .kontakt-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 5rem; align-items: center; }
+        .kontakt-intro { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: #111; max-width: 34rem; margin-bottom: 2.5rem; }
+        .kontakt-list > div { margin-bottom: 1.6rem; }
+        .kontakt-list dt { color: #6b6559; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+        .kontakt-list dd { font-size: 1.25rem; color: #111; overflow-wrap: anywhere; }
+        .kontakt-list a { color: #111; text-decoration: none; }
         .kontakt-list a:hover { text-decoration: underline; }
 
         .map-box {
             position: relative;
             aspect-ratio: 16 / 9;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border: 1px solid #d9d1bc;
+            border-radius: 10px;
             overflow: hidden;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            background: #e6dfcb;
         }
         .map-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -328,7 +316,7 @@
             text-align: center;
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-top: 8rem;
+            margin-top: 0;
         }
         footer a { color: var(--text-main); text-decoration: none; margin: 0 0.5rem; }
         footer a:hover { text-decoration: underline; }
@@ -339,7 +327,6 @@
             .logo-img { height: 36px; }
             nav a { margin: 0 0.5rem; font-size: 0.9rem; }
             section { scroll-margin-top: 7rem; padding-top: 4rem; }
-            footer { margin-top: 4rem; }
             .shop-box-full { padding: 3rem 1.5rem; }
             .band-light #philosophie { padding-top: 3rem; padding-bottom: 3rem; }
             .band-light .slide { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -351,10 +338,10 @@
             .shop-tile h3 { font-size: 1.6rem; }
 
             #kontakt { padding-top: 3rem; }
-            .kontakt-layout { grid-template-columns: 1fr; }
-            .kontakt-card { padding: 1.75rem; }
-            .kontakt-card h3 { font-size: 1.6rem; }
-            .map-box { aspect-ratio: auto; min-height: 320px; }
+            .band-light #kontakt { padding-top: 3rem; padding-bottom: 3rem; }
+            .kontakt-layout { grid-template-columns: 1fr; gap: 2rem; }
+            .kontakt-intro { margin-bottom: 1.75rem; }
+            .kontakt-list dd { font-size: 1.1rem; }
 
             .hero-banner { height: 50vh; }
             .hero-banner::after { background: rgba(0, 0, 0, 0.4); }
@@ -473,32 +460,31 @@
         </section>
 
         <!-- KONTAKT & KARTE -->
+        <div class="band-light">
         <section id="kontakt">
-            <h2 class="sr-only">Kontakt und Anfahrt</h2>
+            <h2 class="sr-only">Kontakt</h2>
+            <p class="kontakt-intro">Fragen zu einem Rad, einem Teil oder einem Aufbau? Melde dich einfach bei uns.</p>
             <div class="kontakt-layout">
-                <div class="kontakt-card">
-                    <h3>Schreib uns oder komm vorbei</h3>
-                    <p class="kontakt-intro">Du hast Fragen zu einem Rad, suchst ein bestimmtes Teil oder willst einen Aufbau besprechen? Melde dich einfach bei uns.</p>
-                    <dl class="kontakt-list">
-                        <div>
-                            <dt>Anschrift</dt>
-                            <dd>friesenfiets<br>Oldenburger Str. 102<br>26316 Varel</dd>
-                        </div>
-                        <div>
-                            <dt>E-Mail</dt>
-                            <dd><a href="mailto:biemannbecker.gbr@gmail.com">biemannbecker.gbr@gmail.com</a></dd>
-                        </div>
-                        <div>
-                            <dt>Telefon</dt>
-                            <dd><a href="tel:+491621774090">0162 1774090</a></dd>
-                        </div>
-                    </dl>
-                </div>
+                <dl class="kontakt-list">
+                    <div>
+                        <dt>Anschrift</dt>
+                        <dd>friesenfiets<br>Oldenburger Str. 102<br>26316 Varel</dd>
+                    </div>
+                    <div>
+                        <dt>E-Mail</dt>
+                        <dd><a href="mailto:biemannbecker.gbr@gmail.com">biemannbecker.gbr@gmail.com</a></dd>
+                    </div>
+                    <div>
+                        <dt>Telefon</dt>
+                        <dd><a href="tel:+491621774090">0162 1774090</a></dd>
+                    </div>
+                </dl>
                 <div class="map-box">
                     <img src="karte.jpg" alt="Kartenausschnitt: Standort von friesenfiets, Oldenburger Str. 102, 26316 Varel" loading="lazy">
                 </div>
             </div>
         </section>
+        </div>
     </main>
 
     <footer>
